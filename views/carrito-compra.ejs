@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+         
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #212733;
+            color: #ffffff;
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .bg-glass {
+            background-color: hsla(0, 0%, 100%, 0.9) !important;
+            backdrop-filter: saturate(200%) blur(25px);
+        }
+
+        .divheader {
+            display: flex;
+            align-items: center;
+            transition: filter 0.3s;
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+
+        .divheader:hover {
+            filter: brightness(1.2);
+        }
+
+        #germain {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 50px;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            height: 40px;
+        }
+
+        .left-header {
+            display: flex;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .cart-container {
+            background-color: #ffffff;
+            color: #212733;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3270E3;
+            color: #ffffff;
+        }
+
+        td input {
+            width: 50px;
+            text-align: center;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkout-btn,
+        .clear-cart-btn {
+            padding: 10px 20px;
+            background-color: #3270E3;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .checkout-btn:hover,
+        .clear-cart-btn:hover {
+            background-color: #301c41;
+            transform: translateY(-2px);
+        }
+
+        .logo {
+            width: 50px; /* Ajusta el ancho del logo */
+            height: auto; /* Mantiene la proporción del logo */
+        }
+
+        .remove-btn {
+            padding: 5px 10px;
+            background-color: #e03e2f;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .remove-btn:hover {
+            background-color: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item button {
+            background-color: #e03e2f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart-item button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-glass fixed-top">
+            <div class="container-fluid">
+                <a href="/"><button class="btn btn-primary button1">Volver al inicio</button></a>
+                <a href="/carrito-compra"><button class="btn btn-primary">Carrito<i class="fas fa-shopping-cart"></i></button></a>
+                <a href="/conocenos"><img src="/logo.png" alt="Logo" class="logo"></a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="cart-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id='tabla_productos'>
+                </tbody>
+            </table>
+
+            <div id='cart-total' class="cart-total">
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Función para obtener y mostrar los productos del carrito
+        async function fetchAndShowData() {
+            const results = await fetch('http://localhost:3001/productos-carrito-compra');
+            const productosEnCarrito = await results.json();
+            console.log(productosEnCarrito);
+
+            const productos = JSON.parse(productosEnCarrito[0].productos_comprados);
+            console.log(productos);
+
+            const tablaProductos = document.getElementById('tabla_productos');
+
+            // Itera sobre los productos y genera las filas de la tabla
+            productos.forEach(producto => {
+                const tr = document.createElement('tr');
+
+                const tdNombre = document.createElement('td');
+                tdNombre.textContent = producto.nombre;
+
+                const tdPrecio = document.createElement('td');
+                tdPrecio.textContent = `$${producto.precio}`;
+
+                const tdCantidad = document.createElement('td');
+                tdCantidad.textContent = producto.cantidad;
+
+                const tdSubtotal = document.createElement('td');
+                tdSubtotal.textContent = `$${producto.precio * producto.cantidad}`;
+
+                const tdEliminar = document.createElement('td');
+                const buttonEliminar = document.createElement('button');
+                buttonEliminar.classList.add('remove-btn');
+                buttonEliminar.textContent = 'Eliminar';
+                buttonEliminar.addEventListener('click', () => eliminarProducto(producto.id)); // Método de eliminación
+                tdEliminar.appendChild(buttonEliminar);
+
+                tr.appendChild(tdNombre);
+                tr.appendChild(tdPrecio);
+                tr.appendChild(tdCantidad);
+                tr.appendChild(tdSubtotal);
+                tr.appendChild(tdEliminar);
+
+                tablaProductos.appendChild(tr);
+            });
+
+            // Muestra el total del carrito
+            const divTotal = document.getElementById('cart-total');
+            const h3 = document.createElement('h3');
+            h3.textContent = `Total: $${productosEnCarrito[0].precio_total}`;
+            
+            const buttonPagar = document.createElement('button');
+            buttonPagar.classList.add('checkout-btn');
+            buttonPagar.textContent = 'Pagar';
+
+            const buttonBorrarCarrito = document.createElement('button');
+            buttonBorrarCarrito.classList.add('clear-cart-btn');
+            buttonBorrarCarrito.textContent = 'Borrar Carrito';
+            buttonBorrarCarrito.addEventListener('click', () => borrarCarrito());
+
+            divTotal.appendChild(h3);
+            divTotal.appendChild(buttonPagar);
+            divTotal.appendChild(buttonBorrarCarrito);
+        }
+
+        // Llama a la función para cargar los datos cuando se cargue la página
+        fetchAndShowData();
+
+        // Función para eliminar un producto del carrito
+        function eliminarProducto(id) {
+            console.log('Eliminando producto con id:', id);
+            fetch(`http://localhost:3001/eliminar-producto/${id}`, {
+                method: 'DELETE'
+            }).then(() => {
+                alert('Producto eliminado del carrito');
+                location.reload();  // Recarga la página para actualizar el carrito
+            }).catch(err => {
+                console.log('Error al eliminar producto:', err);
+            });
+        }
+
+        // Función para borrar todos los productos del carrito
+        function borrarCarrito() {
+            console.log('Borrando todos los productos del carrito');
+            fetch('http://localhost:3001/borrar-carrito', {
+                method: 'DELETE'
+            }).then(() => {
+                alert('Carrito borrado');
+                location.reload();  // Recarga la página para actualizar el carrito
+            }).catch(err => {
+                console.log('Error al borrar el carrito:', err);
+            });
+        }
+    </script>
+</body>
+</html>

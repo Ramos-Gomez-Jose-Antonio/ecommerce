@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conócenos</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+        .background-radial-gradient {
+            background-color: hsl(218, 41%, 15%);
+            background-image: radial-gradient(650px circle at 0% 0%,
+                hsl(218, 41%, 35%) 15%,
+                hsl(218, 41%, 30%) 35%,
+                hsl(218, 41%, 20%) 75%,
+                hsl(218, 41%, 19%) 80%,
+                transparent 100%),
+                radial-gradient(1250px circle at 100% 100%,
+                hsl(218, 41%, 45%) 15%,
+                hsl(218, 41%, 30%) 35%,
+                hsl(218, 41%, 20%) 75%,
+                hsl(218, 41%, 19%) 80%,
+                transparent 100%);
+        }
+
+        .bg-glass {
+            background-color: hsla(0, 0%, 100%, 0.9) !important;
+            backdrop-filter: saturate(200%) blur(25px);
+        }
+
+        .navbar .btn, .navbar .logo {
+            margin: 10px;
+        }
+
+        .logo {
+            width: 50px; /* Ajusta el ancho del logo */
+            height: auto; /* Mantiene la proporción del logo */
+        }
+
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 70px); /* Ajusta la altura para tener en cuenta la altura de la barra de navegación */
+        }
+
+        .card {
+            max-width: 800px;
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .button1 {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            background-color: black;
+            border: 5px solid;
+            border-image: linear-gradient(to right, #3EDBD2, #667add);
+            border-image-slice: 20;
+            border-radius: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button1:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .card-body p {
+            margin: 20px 0;
+            color: black;
+        }
+
+        .card-body h2 {
+            margin-top: 20px;
+            color: black;
+        }
+
+        .navbar {
+            background-color: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        footer .btn {
+            padding: 10px 20px;
+            background-color: transparent;
+            border: 2px solid #3EDBD2;
+            color: #3EDBD2;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        footer .btn:hover {
+            background-color: #3EDBD2;
+            color: white;
+        }
+
+        canvas {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-glass fixed-top">
+        <div class="container-fluid">
+            <a href="/"><button class="btn btn-primary button1">Volver al inicio</button></a>
+            <img src="/logo.png" alt="Logo" class="logo">
+        </div>
+    </nav>
+    <section class="background-radial-gradient overflow-hidden">
+        <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+            <div class="row gx-lg-5 align-items-center mb-5">
+                <div class="col-12 content-wrapper">
+                    <div class="card bg-glass">
+                        <div class="card-body px-4 py-5 px-md-5 text-center">
+                            <h1 class="mb-4">Conócenos</h1>
+                            <p>Aquí podrás ver las estadísticas referentes a cuantos productos hay en stock actualmente.</p>
+                            <h2>Productos por catálogo</h2>
+                            <canvas id="GRAFICAAAA"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let miGrafica;
+    fetch('/data')
+        .then(response => response.json())
+        .then(data => {
+            // Datos para la gráfica
+            const categorias = data.map(item => item.nombre);
+            const conteos = data.map(item => item.count);
+
+            const datos = {
+                labels: categorias, // Etiquetas de las categorías
+                datasets: [{
+                    label: "Productos por categoría",
+                    data: conteos, // Conteo de productos por categoría
+                    backgroundColor: [
+                        'rgba(46, 220, 210, 0.2)',
+                        'rgba(64, 194, 207, 0.2)',
+                        'rgba(85, 154, 211, 0.2)',
+                        'rgba(98, 122, 222, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(46, 220, 210, 1)',
+                        'rgba(64, 194, 207, 1)',
+                        'rgba(85, 206, 211, 1)',
+                        'rgba(98, 122, 222, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            // Crear el gráfico
+            const grafiquita = document.getElementById('GRAFICAAAA').getContext('2d');
+            miGrafica = new Chart(grafiquita, {
+                type: 'bar',
+                data: datos,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+</script>
+
+
+</body>
+</html>

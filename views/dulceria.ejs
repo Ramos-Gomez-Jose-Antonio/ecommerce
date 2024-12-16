@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulceria</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f4f8fc;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 100px;
+            font-size: 3rem;
+            color: #2e3d49;
+        }
+
+        h1::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: #3498db;
+            margin: 20px auto;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar a img {
+            width: 50px;
+            height: auto;
+        }
+
+        .navbar .btn {
+            border-radius: 20px;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar .btn:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .background-radial-gradient {
+            background-color: #ecf4fb;
+            padding-top: 120px;
+        }
+
+        .img-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 30px;
+            justify-items: center;
+            margin-top: 50px;
+        }
+
+        .img-gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .img-gallery img:hover {
+            transform: scale(1.1);
+        }
+
+        .img-gallery div {
+            text-align: center;
+        }
+
+        .img-gallery p {
+            margin-top: 10px;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        .img-gallery button {
+            margin-top: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .img-gallery button:hover {
+            background-color: #2980b9;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .navbar {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+
+
+</head>
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-glass fixed-top">
+        <div class="container-fluid">
+            <a href="/"><button class="btn btn-primary button1">Volver al inicio</button></a>
+            <a href="/carrito-compra"><button class="btn btn-primary">Carrito<i class="fas fa-shopping-cart"></i></button></a>
+            <a href="/conocenos"><img src="/logo.png" alt="Logo" class="logo"></a>
+        </div>
+    </nav>
+    
+    <section class="background-radial-gradient overflow-hidden">
+        <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+            <div class="row gx-lg-5 align-items-center mb-5">
+                
+
+                    <h1 class="mb-4">Dulceria</h1>
+                    <div class="img-gallery" id="galleryDiv">
+                    </div>
+                    
+            </div>
+        </div>           
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        const divParent = document.getElementById("galleryDiv");
+    
+        async function showImagesInDOM() {
+            const response = await fetch('http://localhost:3001/productos-categoria?categoria=dulceria');
+            const productos = await response.json();
+
+            const URLforImages = "http://localhost:3001/showImage/";
+            for (const producto of productos) {
+                const newDivForImage = document.createElement("div");
+
+                const newImageInsideDiv = document.createElement("img");
+                newImageInsideDiv.src = URLforImages + producto.nombre_imagen;
+
+                const newLabelProductIdDiv = document.createElement("p");
+                newLabelProductIdDiv.textContent = `Id del producto: ${producto.producto_id}`;
+
+                const newLabelProductInsideDiv = document.createElement("p");
+                newLabelProductInsideDiv.textContent = `Nombre: ${producto.nombre}`;
+
+                const newLabelPriceInsideDiv = document.createElement("p");
+                newLabelPriceInsideDiv.textContent = `Precio: ${producto.precio}`;
+
+                const newLabelCantInsideDiv = document.createElement("p");
+                newLabelCantInsideDiv.textContent = `Cantidad disponible: ${producto.cantidad}`;
+
+                const formInsideDiv = document.createElement("form");
+                formInsideDiv.action = '/carrito-compra';
+                formInsideDiv.method = 'POST';
+
+                const newButtonOfSubmit = document.createElement("button");
+                newButtonOfSubmit.textContent = "Comprar producto";
+                formInsideDiv.appendChild(newButtonOfSubmit);
+
+                // Add hidden input fields for product details
+                const hiddenId = document.createElement("input");
+                hiddenId.type = "hidden";
+                hiddenId.name = "producto_id";
+                hiddenId.value = producto.producto_id;
+
+                
+                formInsideDiv.appendChild(hiddenId);
+
+                newDivForImage.appendChild(newImageInsideDiv);
+                newDivForImage.appendChild(newLabelProductIdDiv);
+                newDivForImage.appendChild(newLabelProductInsideDiv);
+                newDivForImage.appendChild(newLabelPriceInsideDiv);
+                newDivForImage.appendChild(newLabelCantInsideDiv);
+                newDivForImage.appendChild(formInsideDiv);
+
+                divParent.appendChild(newDivForImage);
+            }
+        }
+
+        showImagesInDOM();
+    </script>
+</body>
+</html>

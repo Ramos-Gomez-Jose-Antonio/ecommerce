@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Producto</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+        .background-radial-gradient {
+            background-color: hsl(218, 41%, 15%);
+            background-image: radial-gradient(650px circle at 0% 0%,
+                hsl(218, 41%, 35%) 15%,
+                hsl(218, 41%, 30%) 35%,
+                hsl(218, 41%, 20%) 75%,
+                hsl(218, 41%, 19%) 80%,
+                transparent 100%),
+                radial-gradient(1250px circle at 100% 100%,
+                hsl(218, 41%, 45%) 15%,
+                hsl(218, 41%, 30%) 35%,
+                hsl(218, 41%, 20%) 75%,
+                hsl(218, 41%, 19%) 80%,
+                transparent 100%);
+        }
+
+        #radius-shape-1 {
+            height: 220px;
+            width: 220px;
+            top: -60px;
+            left: -130px;
+            background: radial-gradient(#44006b, #ad1fff);
+            overflow: hidden;
+        }
+
+        #radius-shape-2 {
+            border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+            bottom: -60px;
+            right: -110px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(#44006b, #ad1fff);
+            overflow: hidden;
+        }
+
+        .logo {
+            width: 50px; /* Ajusta el ancho del logo */
+            height: auto; /* Mantiene la proporción del logo */
+        }
+
+        .bg-glass {
+            background-color: hsla(0, 0%, 100%, 0.9) !important;
+            backdrop-filter: saturate(200%) blur(25px);
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .navbar .button1, .navbar .logo {
+            margin: 10px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 60px); /* Ajusta la altura para tener en cuenta la altura de la barra de navegación */
+        }
+
+        .card {
+            max-width: 500px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            background: hsla(0, 0%, 100%, 0.9);
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+        }
+
+        .form-label {
+            font-size: 1.1em;
+            color: #444;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .form-select {
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .btn-primary {
+            background-color: #3270E3;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .btn-primary:hover {
+            background-color: #0f58c7;
+            transform: translateY(-2px);
+        }
+
+        .background-radial-gradient {
+            padding-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-glass fixed-top">
+        <div class="container-fluid">
+            <a href="/"><button class="btn btn-primary button1">Volver al inicio</button></a>
+            <a href="/carrito-compra"><button class="btn btn-primary">Carrito<i class="fas fa-shopping-cart"></i></button></a>
+            <a href="/conocenos"><img src="/logo.png" alt="Logo" class="logo"></a>
+        </div>
+    </nav>
+    <br><br>
+    <section class="background-radial-gradient overflow-hidden">
+        <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+            <div class="row gx-lg-5 align-items-center mb-5">
+                <div class="col-12 content-wrapper">
+                    <div class="card bg-glass">
+                        <div class="card-body px-4 py-5 px-md-5">
+                            <h1 class="mb-4">Formulario de Nuevo Producto</h1>
+                            <form id="FormularioP" action="/agregar-producto" method="POST" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre del Producto:</label>
+                                    <input type="text" id="nombre" name="nombre" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="precio" class="form-label">Precio:</label>
+                                    <input type="number" id="precio" name="precio" class="form-control" min="0" value="0" step=".01" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="cantidad" class="form-label">Cantidad:</label>
+                                    <input type="number" id="cantidad" name="cantidad" class="form-control" min="1" value="1" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="categoria" class="form-label">Categoría:</label>
+                                    <select id="categoria" name="categoria" class="form-select" required>
+                                        <option value="1">Lacteos</option>
+                                        <option value="2">Verduras</option>
+                                        <option value="3">Frutas</option>
+                                        <option value="4">Bebidas</option>
+                                        <option value="5">Dulceria</option>
+                                        <option value="6">Semillas</option>
+                                        <option value="7">Cereales</option>
+                                        <option value="8">Enlatados</option>
+                                        <option value="9">Higiene</option>
+                                        <option value="10">Jugueteria</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="imagen" class="form-label">Imagen:</label>
+                                    <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('FormularioP').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formu = event.target;
+            const formuDato = new FormData(formu);
+            
+            try {
+                const responde = await fetch(formu.action, {
+                    method: formu.method,
+                    body: formuDato
+                });
+
+                const resultado = await responde.json();
+
+                if (resultado.success) {
+                    alert(resultado.message);
+                }
+                alert('Se mandó correctamente la solicitud');
+                window.location.href = '/';
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Formulario erróneo');
+                window.location.href = '/';
+            }
+        });
+    </script> 
+</body>
+</html>
