@@ -84,6 +84,25 @@
             margin-right: 8px;
         }
 
+        .almacen-btn {
+            position: fixed;
+            bottom: 20px;   /* Distancia desde el fondo de la pantalla */
+            left: 20px;     /* Distancia desde el borde izquierdo */
+            z-index: 99;    /* Asegura que el botón esté por encima de otros elementos */
+            border-radius: 50px;
+            padding: 15px 25px;
+            background-color: #6c757d; /* Color gris */
+            color: white;
+            font-size: 18px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+.almacen-btn:hover {
+    background-color: #5a6268; /* Gris más oscuro al pasar el cursor */
+}
+
         /* Estilo para el botón de salida */
         .exit-btn {
             position: fixed;
@@ -119,7 +138,7 @@
               <div class="col-12 content-wrapper">
                   <div class="card bg-glass">
                       <div class="card-body px-4 py-5 px-md-5 text-center">
-                          <h1 class="mb-4">Bienvenido</h1>
+                          <h1 class="mb-4">Catálogos</h1>
                           <div class="d-grid gap-2 col-12 mx-auto">
                               <a href="/lacteos" class="btn btn-primary"><i class="fas fa-cheese"></i>Lácteos</a>
                               <a href="/verduras" class="btn btn-primary"><i class="fas fa-carrot"></i>Verduras</a>
@@ -138,7 +157,8 @@
           </div>
       </div>
       <footer>
-          <a href="/salida"><button class="exit-btn">Salida <i class="fas fa-sign-out-alt"></i></button></a>
+        <a href="/almacen"><button class="almacen-btn">Almacén <i class="fas fa-warehouse"></i></button></a>
+        <a href="/salida"><button class="exit-btn">Salida <i class="fas fa-sign-out-alt"></i></button></a>
       </footer>
   </section>
 

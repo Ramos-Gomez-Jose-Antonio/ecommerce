@@ -217,6 +217,7 @@
     </main>
 
     <script>
+        let carritoActual = []; // Almacenará el carrito temporalmente
         // Función para obtener y mostrar los productos del carrito
         async function fetchAndShowData() {
             const results = await fetch('http://localhost:3001/productos-carrito-compra');
@@ -248,7 +249,7 @@
                 const buttonEliminar = document.createElement('button');
                 buttonEliminar.classList.add('remove-btn');
                 buttonEliminar.textContent = 'Eliminar';
-                buttonEliminar.addEventListener('click', () => eliminarProducto(producto.id)); // Método de eliminación
+                buttonEliminar.addEventListener('click', () => eliminarProducto(producto.producto_id));
                 tdEliminar.appendChild(buttonEliminar);
 
                 tr.appendChild(tdNombre);
@@ -282,31 +283,44 @@
         // Llama a la función para cargar los datos cuando se cargue la página
         fetchAndShowData();
 
-        // Función para eliminar un producto del carrito
-        function eliminarProducto(id) {
-            console.log('Eliminando producto con id:', id);
-            fetch(`http://localhost:3001/eliminar-producto/${id}`, {
-                method: 'DELETE'
-            }).then(() => {
-                alert('Producto eliminado del carrito');
-                location.reload();  // Recarga la página para actualizar el carrito
-            }).catch(err => {
-                console.log('Error al eliminar producto:', err);
-            });
-        }
+        // Función para eliminar un producto específico
+        async function eliminarProducto(producto_id) {
+    try {
+        const response = await fetch(`/carrito-compra/${producto_id}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
 
-        // Función para borrar todos los productos del carrito
-        function borrarCarrito() {
-            console.log('Borrando todos los productos del carrito');
-            fetch('http://localhost:3001/borrar-carrito', {
-                method: 'DELETE'
-            }).then(() => {
-                alert('Carrito borrado');
-                location.reload();  // Recarga la página para actualizar el carrito
-            }).catch(err => {
-                console.log('Error al borrar el carrito:', err);
-            });
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data.mensaje); // Mensaje del servidor
+            alert("Producto eliminado correctamente.");
+            location.reload(); // Recargar la página
+        } else {
+            const errorMsg = await response.text();
+            console.error("Error al eliminar producto:", errorMsg);
+            alert("Error: " + errorMsg);
         }
+    } catch (error) {
+        console.error("Hubo un error al eliminar el producto:", error);
+        alert("Hubo un error. Intenta de nuevo.");
+    }
+}
+        // Función para vaciar el carrito
+    async function borrarCarrito() {
+    const response = await fetch('/vaciar-carrito', {
+        method: 'DELETE',
+    });
+
+    const result = await response.json();
+    if (result.success) {
+        alert(result.message);
+        location.reload(); // Recarga la página para mostrar los cambios
+    } else {
+        alert('No se pudo vaciar el carrito.');
+    }
+}
+
     </script>
 </body>
 </html>
