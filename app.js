@@ -265,6 +265,9 @@ app.get('/jugueteria', checkAuthenticated, (req, res) => {
 app.get('/conocenos', checkAuthenticated, (req, res)=>{
     res.render('conocenos.ejs');
 });
+app.get('/almacen', checkAuthenticated, (req, res)=>{
+    res.render('almacen.ejs');
+});
 app.use(express.static(path.join(__dirname, 'images')));
 
 app.get('/data', (req, res) => {
@@ -308,6 +311,23 @@ app.get('/data', (req, res) => {
         });
     });
 });
+
+
+//Endpoint para el almacen
+// Ruta para obtener todos los productos
+app.get('/productos', (req, res) => {
+    const query = 'SELECT producto_id, nombre, precio, cantidad, vendedor_id FROM productos';
+    
+    db.query(query, (error, results) => {
+        if (error) {
+            console.error('Error al obtener los productos:', error);
+            return res.status(500).json({ error: 'Error al obtener los productos' });
+        }
+
+        res.json(results); // Enviar los productos como respuesta JSON
+    });
+});
+
 
 //Este endpoint sirve para saber los productos por categoria en la base de datos
 app.get('/productos-categoria', checkAuthenticated, (req, res) => {
@@ -446,6 +466,29 @@ app.get('/productos-carrito-compra', checkAuthenticated, (req, res) => {
     );
 
 })
+
+// Endpoint para eliminar un producto por ID
+app.delete('/eliminar-producto/:id', checkAuthenticated, (req, res) => {
+    const productoId = req.params.id;
+
+    const connection = new mysql_sync({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME
+    });
+
+    const query = 'DELETE FROM productos WHERE producto_id = ?';
+
+    try {
+        connection.query(query, [productoId]);
+        res.json({ success: true, message: 'Producto eliminado correctamente.' });
+    } catch (error) {
+        console.error('Error al eliminar el producto:', error);
+        res.status(500).json({ success: false, message: 'Error al eliminar el producto.' });
+    }
+});
+
 
 //Endpoint para lo relacionado para con el carrito de compra
 app.get('/carrito-compra', checkAuthenticated, (req, res) => {
@@ -668,85 +711,107 @@ app.delete('/carrito-compra/:id_producto', checkAuthenticated, (req, res) => {
         res.status(500).send("Error interno del servidor.");
     }
 });
-/*
-const PDFDocument = require('pdfkit');
-const router = express.Router();
 
-// Endpoint para pagar y enviar el PDF por correo
-router.post('/pagar', async (req, res) => {
-  try {
-    const { carrito, correo } = req.body;
-
-    if (!carrito || carrito.length === 0) {
-      return res.status(400).json({ message: 'El carrito está vacío.' });
+app.get('/obtener-carrito', (req, res) => {
+    const connection = new mysql_sync({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME
+    });
+  
+    const currentMail = req.query.email; // Asume que el email se pasa como parámetro de consulta
+  
+    const queryToCheckUserID = 'SELECT usuario_id FROM usuarios WHERE correo = ?';
+    const id_usuario_db = connection.query(queryToCheckUserID, [currentMail]);
+  
+    if (id_usuario_db.length === 0) {
+      return res.status(404).json({ success: false, message: "Usuario no encontrado" });
     }
+  
+    const id_usuario = id_usuario_db[0].usuario_id;
+  
+    const queryCheckIdCarrito = 'SELECT carrito_id FROM carritos WHERE usuario_id = ?;';
+    const id_carrito_db = connection.query(queryCheckIdCarrito, [id_usuario]);
+  
+    if (id_carrito_db.length === 0) {
+      return res.status(404).json({ success: false, message: "Carrito no encontrado" });
+    }
+  
+    const carrito_id = id_carrito_db[0].carrito_id;
+  
+    const queryGetCarrito = 'SELECT * FROM elementos_carrito WHERE carrito_id = ?';
+    const carrito = connection.query(queryGetCarrito, [carrito_id]);
+  
+    res.json(carrito);
+  });
+  
 
-    // Generar el PDF con los detalles del carrito
-    const doc = new PDFDocument();
-    const pdfPath = path.join(__dirname, 'detalles_carrito.pdf');
 
-    doc.pipe(fs.createWriteStream(pdfPath)); // Guardar PDF temporalmente
 
-    doc.fontSize(20).text('Detalles de tu Pedido', { align: 'center' });
-    doc.moveDown();
-
-    let total = 0;
-    carrito.forEach((item, index) => {
-      const subtotal = item.cantidad * item.costo;
-      total += subtotal;
-
-      doc
-        .fontSize(14)
-        .text(
-          `${index + 1}. Producto: ${item.Nombre} | Cantidad: ${item.cantidad} | Precio Unitario: $${item.costo} | Subtotal: $${subtotal.toFixed(2)}`
-        );
+app.get('/obtener-carrito', (req, res) => {
+    const connection = new mysql_sync({
+       host: process.env.DB_HOST,
+       user: process.env.DB_USER,
+       password: process.env.DB_PASSWORD,
+       database: process.env.DB_NAME
+        });
+    // Suponiendo que tienes una conexión a la base de datos llamada 'connection'
+    const queryToCheckUserID = 'SELECT usuario_id FROM usuarios WHERE correo = ?';
+    const id_usuario_db = connection.query(queryToCheckUserID, [currentMail]);
+    const id_usuario = id_usuario_db[0].usuario_id
+    console.log("ESTE ES EL ID: ", id_usuario);
+    const queryCheckIdCarrito = 'SELECT carrito_id FROM carritos WHERE usuario_id = ?;'
+    const id_carrito_db = connection.query(queryCheckIdCarrito, [id_usuario]);
+    carrito_id = id_carrito_db[0].carrito_id;
+    connection.query('SELECT * FROM elementos_carrito WHERE carrito_id = ?', [carrito_id], (error, results) => {
+        if (error) throw error;
+        res.json(results);
     });
-
-    doc.moveDown();
-    doc.fontSize(16).text(`Total: $${total.toFixed(2)}`, { align: 'right' });
-    doc.end();
-
-    // Configuración de Nodemailer
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    // Opciones del correo con PDF adjunto
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: correo, // Correo del usuario
-      subject: 'Confirmación de tu compra con PDF',
-      text: 'Gracias por tu compra. Adjuntamos los detalles en un PDF.',
-      attachments: [
-        {
-          filename: 'detalles_carrito.pdf',
-          path: pdfPath,
-          contentType: 'application/pdf',
-        },
-      ],
-    };
-
-    // Enviar correo
-    await transporter.sendMail(mailOptions);
-
-    // Eliminar el PDF temporalmente guardado
-    fs.unlinkSync(pdfPath);
-
-    res.status(200).json({ message: 'Pago realizado y PDF enviado por correo.' });
-  } catch (error) {
-    console.error('Error en el proceso de pago:', error);
-    res.status(500).json({ message: 'Error al realizar el pago o enviar el PDF.' });
-  }
 });
 
+app.use(bodyParser.json()); // Middleware para parsear JSON
 
-module.exports = router;
-*/
+// Configuración del transporte de correo
+const transporter = nodemailer.createTransport({
+    service: 'gmail', // Ejemplo con Gmail
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
 
+    }
+});
+
+// Ruta para enviar el correo
+app.post('/enviar-correo', (req, res) => {
+    const { productos, total } = req.body;
+
+    // Crear el contenido del correo
+    let contenidoCorreo = '<h2>Resumen de tu compra</h2><ul>';
+    productos.forEach(producto => {
+        contenidoCorreo += `<li>${producto.nombre} - Cantidad: ${producto.cantidad}, Precio: $${producto.precio}</li>`;
+    });
+    contenidoCorreo += `</ul><p><strong>Total a pagar: $${total}</strong></p>`;
+
+    // Configuración del correo
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_CLIENT, // Reemplazar con el correo del cliente
+        subject: 'Confirmación de compra',
+        html: contenidoCorreo
+    };
+
+    // Enviar el correo
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error('Error al enviar el correo:', error);
+            res.status(500).json({ success: false, message: 'Error al enviar el correo.' });
+        } else {
+            console.log('Correo enviado:', info.response);
+            res.json({ success: true, message: 'Correo enviado exitosamente.' });
+        }
+    });
+});
 
 function checkAuthenticated(req, res, next){
     if(req.isAuthenticated()){

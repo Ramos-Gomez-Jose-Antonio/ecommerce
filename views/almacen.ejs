@@ -3,46 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Almacen</title>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Almacén</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .background-radial-gradient {
-            background-color: hsl(218, 41%, 15%);
-            background-image: radial-gradient(650px circle at 0% 0%,
-                hsl(218, 41%, 35%) 15%,
-                hsl(218, 41%, 30%) 35%,
-                hsl(218, 41%, 20%) 75%,
-                hsl(218, 41%, 19%) 80%,
-                transparent 100%),
-                radial-gradient(1250px circle at 100% 100%,
-                hsl(218, 41%, 45%) 15%,
-                hsl(218, 41%, 30%) 35%,
-                hsl(218, 41%, 20%) 75%,
-                hsl(218, 41%, 19%) 80%,
-                transparent 100%);
-        }
-
-        #radius-shape-1 {
-            height: 220px;
-            width: 220px;
-            top: -60px;
-            left: -130px;
-            background: radial-gradient(#44006b, #ad1fff);
-            overflow: hidden;
-        }
-
-        #radius-shape-2 {
-            border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
-            bottom: -60px;
-            right: -110px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(#44006b, #ad1fff);
-            overflow: hidden;
-        }
-
         .bg-glass {
             background-color: hsla(0, 0%, 100%, 0.9) !important;
             backdrop-filter: saturate(200%) blur(25px);
@@ -57,92 +20,112 @@
             height: auto; /* Mantiene la proporción del logo */
         }
 
-        .content-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 70px); /* Ajusta la altura para tener en cuenta la altura de la barra de navegación */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
         }
-
-        .card {
-            max-width: 500px;
-            width: 100%;
+        .table-container {
+            margin: 100px auto 50px; /* Aumentar margen superior para evitar que el nav tape el título */
+            max-width: 1000px;
         }
-
-        .cart-btn {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-
-        .cart-btn i {
-            font-size: 24px; /* Ajusta el tamaño según sea necesario */
-            color: #333; /* Ajusta el color según sea necesario */
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
         }
-
-        .btn i {
-            margin-right: 8px;
-        }
-
-        /* Estilo para el botón de salida */
-        .exit-btn {
-            position: fixed;
-            bottom: 20px;  /* Ajusta la distancia desde el fondo de la pantalla */
-            right: 20px;   /* Ajusta la distancia desde el borde derecho */
-            z-index: 99;   /* Asegura que el botón esté por encima de otros elementos */
-            border-radius: 50px;
-            padding: 15px 25px;
-            background-color: #dc3545; /* Color rojo */
+        .btn-eliminar {
+            background-color: #e74c3c;
             color: white;
-            font-size: 18px;
-            border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease;
         }
-
-        .exit-btn:hover {
-            background-color: #c82333; /* Rojo más oscuro cuando se pasa el cursor */
+        .btn-eliminar:hover {
+            background-color: #c0392b;
         }
     </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-glass fixed-top">
-      <div class="container-fluid">
-          <a href="/agregar-producto"><button class="btn btn-primary">Vende tu producto</button></a>
-          <a href="/carrito-compra"><button class="btn btn-primary">Carrito <i class="fas fa-shopping-cart"></i></button></a>
-          <a href="/conocenos"><img src="/logo.png" alt="Logo" class="logo"></a>
-      </div>
-  </nav>
-  <section class="background-radial-gradient overflow-hidden">
-      <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-          <div class="row gx-lg-5 align-items-center mb-5">
-              <div class="col-12 content-wrapper">
-                  <div class="card bg-glass">
-                      <div class="card-body px-4 py-5 px-md-5 text-center">
-                          <h1 class="mb-4">Bienvenido</h1>
-                          <div class="d-grid gap-2 col-12 mx-auto">
-                              <a href="/lacteos" class="btn btn-primary"><i class="fas fa-cheese"></i>Lácteos</a>
-                              <a href="/verduras" class="btn btn-primary"><i class="fas fa-carrot"></i>Verduras</a>
-                              <a href="/frutas" class="btn btn-primary"><i class="fas fa-apple-alt"></i>Frutas</a>
-                              <a href="/bebidas" class="btn btn-primary"><i class="fas fa-cocktail"></i>Bebidas</a>
-                              <a href="/dulceria" class="btn btn-primary"><i class="fas fa-candy-cane"></i>Dulcería</a>
-                              <a href="/semillas" class="btn btn-primary"><i class="fas fa-seedling"></i>Semillas</a>
-                              <a href="/cereales" class="btn btn-primary"><i class="fas fa-bread-slice"></i>Cereales</a>
-                              <a href="/enlatados" class="btn btn-primary"><i class="fas fa-drumstick-bite"></i> Enlatados</a>
-                              <a href="/higiene" class="btn btn-primary"><i class="fas fa-toilet-paper"></i>Higiene</a>
-                              <a href="/jugueteria" class="btn btn-primary"><i class="fas fa-puzzle-piece"></i>Juguetería</a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <footer>
-          <a href="/salida"><button class="exit-btn">Salida <i class="fas fa-sign-out-alt"></i></button></a>
-      </footer>
-  </section>
+    <nav class="navbar navbar-expand-lg navbar-light bg-glass fixed-top">
+        <div class="container-fluid">
+            <a href="/"><button class="btn btn-primary button1">Volver al inicio</button></a>
+            <img src="/logo.png" alt="Logo" class="logo">
+        </div>
+    </nav>
+    <div class="table-container">
+        <h1>Almacén</h1>
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>ID Vendedor</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="productos-body">
+                <!-- Filas generadas dinámicamente -->
+            </tbody>
+        </table>
+    </div>
 
-  <!-- JavaScript Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script>
+        // Función para cargar los productos desde el backend
+        function cargarProductos() {
+            fetch('/productos')
+                .then(response => response.json())
+                .then(data => {
+                    const productosBody = document.getElementById('productos-body');
+                    productosBody.innerHTML = ''; // Limpiar la tabla antes de renderizar
+
+                    data.forEach(producto => {
+                        const row = `
+                            <tr>
+                                <td>${producto.producto_id}</td>
+                                <td>${producto.nombre}</td>
+                                <td>$${producto.precio}</td>
+                                <td>${producto.cantidad}</td>
+                                <td>${producto.vendedor_id}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-eliminar" onclick="eliminarProducto(${producto.producto_id})">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                        productosBody.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error('Error al cargar los productos:', error));
+        }
+
+        // Función para eliminar un producto
+        function eliminarProducto(productoId) {
+            if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+                fetch(`/eliminar-producto/${productoId}`, {
+                    method: 'DELETE',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Producto eliminado correctamente.');
+                        cargarProductos(); // Recargar la tabla
+                    } else {
+                        alert('Error al eliminar el producto.');
+                    }
+                })
+                .catch(error => console.error('Error al eliminar el producto:', error));
+            }
+        }
+
+        // Cargar productos al iniciar
+        cargarProductos();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
