@@ -786,6 +786,9 @@ const transporter = nodemailer.createTransport({
 app.post('/enviar-correo', (req, res) => {
     const { productos, total } = req.body;
 
+    // Obtener el correo del usuario actual (puedes obtenerlo del objeto de sesión o JWT, dependiendo de tu autenticación)
+    const correoUsuario = currentMail; // Aquí debes obtener el correo del usuario que está autenticado
+
     // Crear el contenido del correo
     let contenidoCorreo = '<h2>Resumen de tu compra</h2><ul>';
     productos.forEach(producto => {
@@ -796,7 +799,7 @@ app.post('/enviar-correo', (req, res) => {
     // Configuración del correo
     const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_CLIENT, // Reemplazar con el correo del cliente
+        to: correoUsuario, // Correo del usuario
         subject: 'Confirmación de compra',
         html: contenidoCorreo
     };
@@ -812,6 +815,10 @@ app.post('/enviar-correo', (req, res) => {
         }
     });
 });
+
+
+ 
+
 
 function checkAuthenticated(req, res, next){
     if(req.isAuthenticated()){
