@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de nuevo producto</title>
+    <link rel="stylesheet" href="./CSS/FromNewPro.css">
+    <link rel="icon" href="./IMG/esquirla.png">
+</head>
+<body>
+    <div class="barrita1">
+        <div class="title">
+            <h2 class="title">Nueva Publicación</h2>
+        </div>
+        <button onclick="cambiarCom()" class="cambiarC">Comprar</button>
+    </div>
+    <div class="barrita2">
+        <button onclick="" class="hamburgo"><img src="./IMG/ham.png" alt="" class="ha"></button>
+    </div>
+    <div class="barrita3">
+    <div class="formulario">
+        <h2>Formulario</h2>
+        <form action="" class="subirPro" id="newProductForm" onsubmit="return validarForm()">
+            <ul class="form-list">
+                <li><input type="text" id="nombre" placeholder="Nombre" required></li>
+                <li><input type="text" id="descripcion" placeholder="Descripción" required></li>
+                <li><input type="number" id="cantidad" placeholder="Cantidad" required min="1"></li>
+                <li><input type="number" id="costo" placeholder="Costo unitario" required min="0.01" step="0.01"></li>
+                <li><input type="file" id="image" accept="image/png, image/jpeg, image/jpg" required></li>
+                <li>
+                    <h2>Área</h2>
+                    <input type="text" id="plantel" placeholder="Plantel" onclick="toggleList('plantelList')" required readonly>
+                        <select class="form-select" required>
+                            <option>CECyT 1</option>
+                            <option>CECyT 2</option>
+                            <option>CECyT 3</option>
+                            <option>CECyT 4</option>
+                            <option>CECyT 5</option>
+                            <option>CECyT 6</option>
+                            <option>CECyT 7</option>
+                            <option>CECyT 8</option>
+                            <option>CECyT 9</option>
+                            <option>CECyT 10</option>
+                        </select>
+                </li>
+                <li>
+                    <input type="text" id="catalogo" placeholder="Catálogo" onclick="listaPlan('catalogoList')" required readonly>
+                    <select class="form-select" required>
+                        <option>catalogo 1</option>
+                        <option>catalogo 2</option>
+                        <option>catalogo 3</option>
+                        <option>catalogo 4</option>
+                    </select>
+                </li>
+                <li class="button-container">
+                    <input type="button" value="Enviar" onclick="subirForm()">
+                    <input type="reset" value="Restablecer">
+                </li>
+            </ul>
+        </form>
+    </div>
+    </div>
+    <script src="./JS/FormNewPro.js"></script>
+</body>
+</html>
