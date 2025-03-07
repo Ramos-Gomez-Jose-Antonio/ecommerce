@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almacén</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .bg-glass {
+            background-color: hsla(0, 0%, 100%, 0.9) !important;
+            backdrop-filter: saturate(200%) blur(25px);
+        }
+
+        .navbar .btn, .navbar .logo {
+            margin: 10px;
+        }
+
+        .logo {
+            width: 50px; /* Ajusta el ancho del logo */
+            height: auto; /* Mantiene la proporción del logo */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+        }
+        .table-container {
+            margin: 100px auto 50px; /* Aumentar margen superior para evitar que el nav tape el título */
+            max-width: 1000px;
+        }
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .btn-eliminar {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .btn-eliminar:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-glass fixed-top">
+        <div class="container-fluid">
+            <a href="/"><button class="btn btn-primary button1">Volver al inicio</button></a>
+            <img src="/logo.png" alt="Logo" class="logo">
+        </div>
+    </nav>
+    <div class="table-container">
+        <h1>Almacén</h1>
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>ID Vendedor</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="productos-body">
+                <!-- Filas generadas dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Función para cargar los productos desde el backend
+        function cargarProductos() {
+            fetch('/productos')
+                .then(response => response.json())
+                .then(data => {
+                    const productosBody = document.getElementById('productos-body');
+                    productosBody.innerHTML = ''; // Limpiar la tabla antes de renderizar
+
+                    data.forEach(producto => {
+                        const row = `
+                            <tr>
+                                <td>${producto.producto_id}</td>
+                                <td>${producto.nombre}</td>
+                                <td>$${producto.precio}</td>
+                                <td>${producto.cantidad}</td>
+                                <td>${producto.vendedor_id}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-eliminar" onclick="eliminarProducto(${producto.producto_id})">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                        productosBody.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error('Error al cargar los productos:', error));
+        }
+
+        // Función para eliminar un producto
+        function eliminarProducto(productoId) {
+            if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+                fetch(`/eliminar-producto/${productoId}`, {
+                    method: 'DELETE',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Producto eliminado correctamente.');
+                        cargarProductos(); // Recargar la tabla
+                    } else {
+                        alert('Error al eliminar el producto.');
+                    }
+                })
+                .catch(error => console.error('Error al eliminar el producto:', error));
+            }
+        }
+
+        // Cargar productos al iniciar
+        cargarProductos();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Graficas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        *{
+            background-color: #CDDFEC;
+        }
+
+        .head{
+            background-color: #15679A;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10vh;
+        }
+
+        .title{
+            background-color: #4395C8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            height: 5vh;
+            border-radius: 20px;
+            color: #FFFFFF;
+        }
+
+        .division{
+            background-color: #4395C8;
+            height: 6vh;
+        }
+
+        .icon{
+            height: 6vh;
+            background-color: #4395C8;
+            float: right;
+            padding-right: 20px;
+        }
+
+        .seccion2{
+            background-color: #CDDFEC;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .tabla{
+            background-color: #FFFFFF;
+            height: 70vh;
+            width: 80%;
+            overflow-y: scroll;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .graf{
+            background-color: #FFFFFF;
+            color: #767676;
+        }
+
+        canvas{
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+        }
+
+        .grafico{
+            background-color: #FFFFFF;
+            width: 100%;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="head">
+        <div class="title">
+            <h2 class="title">GRÁFICAS</h2>
+        </div>
+    </div>
+    <div class="division">
+        <a href="/admin"><img src="/icon_graf.png" alt="" class="icon"></a>
+    </div>
+    <br><br><br>
+    <div class="seccion2">
+        <div class="tabla">
+            <h2 class="graf">Cantidad de productos por plantel</h2>
+            <div class="grafico">
+                <canvas id="miGrafico"></canvas> <!-- El lienzo para el gráfico -->
+            </div>
+        </div>
+
+    <script>
+        window.onload = function () {
+    var ctx = document.getElementById('miGrafico').getContext('2d'); // Obtenemos el contexto del canvas
+
+    var miGrafico = new Chart(ctx, {
+        type: 'bar', // Tipo de gráfico: barras
+        data: {
+            labels: ['CECyT1', 'CECyT2', 'CECyT3', 'CECyT4', 'CECyT5', 'CECyT6', 'CECyT7', 'CECyT8', 'CECyT9'], // Etiquetas del eje X
+            datasets: [{
+                label: 'Productos por CECyT', // Título de la serie de datos
+                data: [12, 19, 3, 5, 2, 2, 4, 5, 6], // Los datos que se mostrarán en el gráfico
+                backgroundColor: [
+                        '#4695C6', // Color de la primera parte de las barras
+                        '#2B7DB1'
+                        ],
+                borderColor:[
+                    '#4695C6',
+                    '#2B7DB1'
+                ],
+                 // Color del borde de las barras
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    grid: {
+                        display: false // Desactiva las líneas de la cuadrícula en el eje X
+                    }
+                },
+                y: {
+                grid: {
+                        display: false // Desactiva las líneas de la cuadrícula en el eje Y
+                    },
+                    beginAtZero: true // El eje Y comienza en 0
+                    }
+            },
+            barPercentage: 2.0, // Ajusta el ancho de las barras (0.5 hace que estén más juntas)
+            categoryPercentage: 0.5 // Ajusta la separación entre las barras dentro de cada grupo
+        }
+    });
+};
+    </script>
+</body>
+</html>

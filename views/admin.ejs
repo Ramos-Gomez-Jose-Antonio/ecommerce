@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Administrasdor</title>
+    <style>
+        *{
+            background-color: #CDDFEC;
+        }
+
+        .head{
+            background-color: #15679A;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10vh;
+        }
+
+        .title{
+            background-color: #4395C8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            height: 5vh;
+            border-radius: 20px;
+            color: #FFFFFF;
+        }
+
+        .division{
+            background-color: #4395C8;
+            height: 6vh;
+        }
+
+        .icon{
+            height: 6vh;
+            background-color: #4395C8;
+            float: right;
+            padding-right: 20px;
+        }
+
+        .seccion2{
+            background-color: #CDDFEC;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .tabla{
+            background-color: #FFFFFF;
+            height: 70vh;
+            width: 80%;
+            overflow-y: scroll;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th{
+            border: 2px solid #CDDFEC;
+            padding: 8px;
+            text-align: left;
+            background-color: #2B7DB1;
+            color: white;
+            font-style: inherit;
+            font-family: "Inter", sans-serif;
+            font-weight: normal;
+            font-size: 20px;
+        }
+
+        td{
+            background-color: #FFFFFF;
+            border-left: 2px solid #CDDFEC;
+            padding-top: 7px;
+            font-size: 17px;
+            font-family: "Inter", sans-serif;
+        }
+
+        .btn{
+            background-color: #2B7DB1;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            color: white;
+            padding: 5px 45px 5px 45px;
+            font-size: 15px;
+        }
+
+        .btn:hover {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="head">
+        <div class="title">
+            <h2 class="title">ALMACÉN</h2>
+        </div>
+    </div>
+    <div class="division">
+        <a href="/graficas"><img src="/icon_admin.png" alt="" class="icon"></a>
+    </div>
+    <br><br><br>
+    <div class="seccion2">
+        <div class="tabla">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Plantel</th>
+                        <th>ID vendedor</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Producto A</td>
+                        <td>50</td>
+                        <td>$100</td>
+                        <td>Plantel 1</td>
+                        <td>V001</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Producto B</td>
+                        <td>30</td>
+                        <td>$150</td>
+                        <td>Plantel 2</td>
+                        <td>V002</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Producto C</td>
+                        <td>20</td>
+                        <td>$200</td>
+                        <td>Plantel 3</td>
+                        <td>V003</td>
+                        <td><button class="btn">Eliminar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
