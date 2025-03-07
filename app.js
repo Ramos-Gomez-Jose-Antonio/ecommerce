@@ -21,6 +21,14 @@ const bodyParser = require("body-parser")
 
 const mysql_sync = require("sync-mysql")
 
+
+
+const cors = require('cors');
+app.use(cors());
+
+
+
+
 var currentMail=""
 
 initializePassport(passport)
@@ -70,6 +78,10 @@ const db = mysql.createConnection({
     }
   });
 
+  // Pantalla principal
+app.get('/', checkAuthenticated, (req, res) => {
+    res.render("admin.ejs", {name: req.user.name})
+})
 
 //Registro
 
@@ -133,20 +145,28 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 
 app.post("/login", checkNotAuthenticated, (req, res, next) => {
     currentMail = req.body.email;
-    console.log(currentMail)
+    console.log(currentMail);
 
-    passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-    failureFlash: true
-})(req, res,next);
-})
+    passport.authenticate("local", (err, user, info) => {
+        if (err) return next(err);
+        if (!user) return res.redirect("/login");
+
+        req.logIn(user, (err) => {
+            if (err) return next(err);
+
+            // Verificar el rol del usuario
+            if (user.role === "administrador") {
+                return res.redirect("/admin");
+            }
+            
+            // Si es comprador, redirigir a la página principal
+            return res.redirect("/");
+        });
+    })(req, res, next);
+});
 
 
-// Pantalla principal
-app.get('/', checkAuthenticated, (req, res) => {
-    res.render("index.ejs", {name: req.user.name})
-})
+
 
 // TODO CERRAR SESION
 app.delete("/logout", (req, res) => {
@@ -835,3 +855,13 @@ function checkNotAuthenticated(req, res, next){
 }
 
 app.listen(3001)
+
+
+
+app.get("/graficas", checkAuthenticated, (req, res) => {
+    res.render("graficas.ejs"); 
+});
+
+app.get("/admin", checkAuthenticated, (req, res) => {
+    res.render("admin.ejs"); 
+});
