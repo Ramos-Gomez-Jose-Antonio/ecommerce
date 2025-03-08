@@ -1,0 +1,117 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background-color: #CDDFEC;
+}
+.head{
+    background-color: #15679A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+}
+
+.title{
+    background-color: #4395C8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 5vh;
+    border-radius: 20px;
+    color: #FFFFFF;
+}
+
+.division{
+    background-color: #4395C8;
+    height: 6vh;
+}
+
+.icon{
+    height: 6vh;
+    background-color: #4395C8;
+    float: right;
+    padding-right: 20px;
+}
+
+.seccion2{
+    background-color: #CDDFEC;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.tabla{
+    background-color: #FFFFFF;
+    height: 70vh;
+    width: 80%;
+    overflow-y: scroll;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th{
+    border: 2px solid #CDDFEC;
+    padding: 8px;
+    text-align: left;
+    background-color: #2B7DB1;
+    color: white;
+    font-style: inherit;
+    font-family: "Inter", sans-serif;
+    font-weight: normal;
+    font-size: 20px;
+}
+
+td{
+    background-color: #FFFFFF;
+    border-left: 2px solid #CDDFEC;
+    padding-top: 7px;
+    font-size: 17px;
+    font-family: "Inter", sans-serif;
+}
+
+.btn{
+    background-color: #2B7DB1;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+    padding: 5px 45px 5px 45px;
+    font-size: 15px;
+}
+
+.btn:hover {
+    background-color: red;
+}
+
+.comprar{
+    width: 4.5rem;
+    height: 2rem;
+    border-radius: 16px;
+    border: none;
+}
+.comprar:hover{
+    background: red;
+    color: white;
+}
+
+
+.regresar{
+    align-items: center;
+    border: none;
+    width: 5rem;
+    height: 2rem;
+    margin-top: 5px;
+    margin-left: 12px;
+    border-radius: 16px;
+}
+
+
+.regresar:hover{
+    background: #6f42ec;
+    color: #CDDFEC  ;
+}

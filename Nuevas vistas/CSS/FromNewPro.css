@@ -1,0 +1,157 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background-color: #CDDFEC;
+}
+
+
+.barrita1 {
+    background-color: #15679A;
+    display: flex;
+    align-items: center;
+    height: 10vh;
+}
+
+.title {
+    border-radius: 100px;
+    background-color: #4395C8;
+    height: 5vh;
+    width: 40%;
+    margin-left: 30%;
+    color: aliceblue;
+    font-size: 18px;
+    text-align: center;
+}
+
+.cambiarC {
+    border-radius: 100px;
+    background-color: #4395C8;
+    color: aliceblue;
+    height: 30px;
+    width: 8%;
+    margin-left: 18%;
+    border: 1px solid #ddd;
+    font-size: 18px;
+}
+
+.cambiarC:hover {
+    color: #000000;
+    background: #b3e2ff;
+}
+
+.barrita2 {
+    background-color: #4395C8;
+    width: 100%;
+    height: 6.5vh;
+    color: aliceblue;
+}
+
+.ha {
+    height: 5.5vh;
+    background-color: #4395C8;
+    float: right;
+    padding-right: 20px;
+}
+
+.hamburgo {
+    border: none;
+    margin-left: 15px;
+    width: 4.4%;
+}
+
+.ha:hover {
+    background: #b3e2ff;
+}
+
+.formulario {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+    width: 80%;
+    max-width: 500px; 
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+input[type="text"], input[type="number"], input[type="file"], input[type="button"], input[type="reset"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+input[type="button"], input[type="reset"] {
+    cursor: pointer;
+    background-color: #15679A;
+    color: white;
+    border: none;
+}
+
+input[type="button"]:hover, input[type="reset"]:hover {
+    background-color: #4395C8;
+}
+
+.dropdown-list {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    z-index: 1;
+}
+
+.dropdown-list ul {
+    list-style: none;
+    padding: 5px;
+    margin: 0;
+}
+
+.dropdown-list ul li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.dropdown-list ul li:hover {
+    background-color: #ddd;
+}
+
+/* Mostrar lista cuando se hace clic en el input */
+input[type="text"]:focus + .dropdown-list {
+    display: block;
+}
+
+/* Para alinear los botones Enviar y Restablecer en la misma fila */
+.button-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+.barrita3{
+    align-items: center;
+    display: flex;
+    text-align: center;
+}
