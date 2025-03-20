@@ -865,3 +865,126 @@ app.get("/graficas", checkAuthenticated, (req, res) => {
 app.get("/admin", checkAuthenticated, (req, res) => {
     res.render("admin.ejs"); 
 });
+
+
+
+
+
+
+
+
+/* MEJORAS CARRITO
+app.get('/obtener-carrito', checkAuthenticated, async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT usuario_id FROM usuarios WHERE correo = ?', [req.user.email]);
+
+        if (rows.length === 0) return res.status(404).json({ success: false, message: "Usuario no encontrado" });
+
+        const usuario_id = rows[0].usuario_id;
+
+        const [carrito] = await pool.query('SELECT * FROM elementos_carrito WHERE carrito_id = (SELECT carrito_id FROM carritos WHERE usuario_id = ?)', [usuario_id]);
+
+        res.json({ success: true, carrito });
+
+    } catch (error) {
+        console.error("Error obteniendo carrito:", error);
+        res.status(500).json({ success: false, message: "Error interno del servidor" });
+    }
+});
+
+
+app.post('/carrito-compra', checkAuthenticated, async (req, res) => {
+    try {
+        const { producto_id, cantidad } = req.body;
+        const [producto] = await pool.query('SELECT * FROM productos WHERE producto_id = ?', [producto_id]);
+
+        if (producto.length === 0) return res.status(404).json({ message: "Producto no encontrado" });
+
+        const [usuario] = await pool.query('SELECT usuario_id FROM usuarios WHERE correo = ?', [req.user.email]);
+        const usuario_id = usuario[0].usuario_id;
+
+        let [carrito] = await pool.query('SELECT carrito_id FROM carritos WHERE usuario_id = ?', [usuario_id]);
+
+        if (carrito.length === 0) {
+            await pool.query('INSERT INTO carritos (usuario_id) VALUES (?)', [usuario_id]);
+            [carrito] = await pool.query('SELECT carrito_id FROM carritos WHERE usuario_id = ?', [usuario_id]);
+            await pool.query('INSERT INTO elementos_carrito (carrito_id, productos_comprados, precio_total) VALUES (?, ?, ?)', [carrito[0].carrito_id, '[]', 0]);
+        }
+
+        const carrito_id = carrito[0].carrito_id;
+        const [elemento] = await pool.query('SELECT * FROM elementos_carrito WHERE carrito_id = ?', [carrito_id]);
+
+        let productos = JSON.parse(elemento[0].productos_comprados);
+        productos.push({ producto_id, cantidad, precio: producto[0].precio });
+
+        const nuevoPrecioTotal = productos.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
+
+        await pool.query('UPDATE elementos_carrito SET productos_comprados = ?, precio_total = ? WHERE carrito_id = ?', [JSON.stringify(productos), nuevoPrecioTotal, carrito_id]);
+
+        res.json({ message: "Producto añadido", carrito: productos });
+
+    } catch (error) {
+        console.error("Error añadiendo producto:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
+    }
+});
+
+
+app.delete('/carrito-compra/:id_producto', checkAuthenticated, async (req, res) => {
+    try {
+        const id_producto = parseInt(req.params.id_producto);
+        const [usuario] = await pool.query('SELECT usuario_id FROM usuarios WHERE correo = ?', [req.user.email]);
+
+        if (usuario.length === 0) return res.status(404).json({ message: "Usuario no encontrado" });
+
+        const usuario_id = usuario[0].usuario_id;
+
+        const [carrito] = await pool.query('SELECT * FROM carritos WHERE usuario_id = ?', [usuario_id]);
+
+        if (carrito.length === 0) return res.status(404).json({ message: "Carrito no encontrado" });
+
+        const carrito_id = carrito[0].carrito_id;
+        const [elemento] = await pool.query('SELECT * FROM elementos_carrito WHERE carrito_id = ?', [carrito_id]);
+
+        let productos = JSON.parse(elemento[0].productos_comprados);
+        productos = productos.filter(p => p.producto_id !== id_producto);
+
+        const nuevoPrecioTotal = productos.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
+
+        await pool.query('UPDATE elementos_carrito SET productos_comprados = ?, precio_total = ? WHERE carrito_id = ?', [JSON.stringify(productos), nuevoPrecioTotal, carrito_id]);
+
+        if (productos.length === 0) {
+            await pool.query('DELETE FROM carritos WHERE usuario_id = ?', [usuario_id]);
+        }
+
+        res.json({ message: "Producto eliminado", carrito: productos });
+
+    } catch (error) {
+        console.error("Error eliminando producto:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
+    }
+});
+
+
+app.delete('/vaciar-carrito', checkAuthenticated, async (req, res) => {
+    try {
+        const [usuario] = await pool.query('SELECT usuario_id FROM usuarios WHERE correo = ?', [req.user.email]);
+
+        if (usuario.length === 0) return res.status(404).json({ message: "Usuario no encontrado" });
+
+        const usuario_id = usuario[0].usuario_id;
+        await pool.query('DELETE FROM carritos WHERE usuario_id = ?', [usuario_id]);
+
+        res.json({ message: "Carrito vaciado correctamente" });
+
+    } catch (error) {
+        console.error("Error vaciando carrito:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
+    }
+});
+
+
+*/
+
+
+
