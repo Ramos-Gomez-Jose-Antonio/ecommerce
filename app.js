@@ -988,3 +988,99 @@ app.delete('/vaciar-carrito', checkAuthenticated, async (req, res) => {
 
 
 
+/* MEJORAS FILTROS CATEGORÍAS
+const categorias = ['Programación', 'Mecatrónica', 'Sistemas Digitales', 'Dibujo técnico', 'Tronco común'];
+categorias.forEach(categoria => {
+    app.get(`/${categoria}`, checkAuthenticated, (req, res) => {
+        res.render(`${categoria}.ejs`);
+    });
+});
+
+app.use(express.static(path.join(__dirname, 'images')));
+
+// Ruta para obtener datos de productos por categoría
+app.get('/data', (req, res) => {
+    const queries = [
+        { id: 1, nombre: "Programación" },
+        { id: 2, nombre: "Mecatrónica" },
+        { id: 3, nombre: "Sistemas Digitales" },
+        { id: 4, nombre: "Dibujo t´pecnico" },
+        { id: 5, nombre: "Tronco común },
+    ];
+
+    const results = [];
+    let completedQueries = 0;
+
+    queries.forEach((categoria, index) => {
+        const query = `SELECT COUNT(*) AS count FROM productos WHERE categoria_id = ${categoria.id}`;
+        db.query(query, (error, result) => {
+            if (error) {
+                console.error('Error ejecutando la consulta:', error);
+                res.status(500).send('Error en el servidor');
+                return;
+            }
+            results[index] = {
+                nombre: categoria.nombre,
+                count: result[0].count
+            };
+            completedQueries++;
+            if (completedQueries === queries.length) {
+                res.json(results);
+            }
+        });
+    });
+});
+
+// Ruta para obtener productos filtrados por catálogo o plantel
+app.get('/productos', checkAuthenticated, (req, res) => {
+    const { catalogo_id, plantel_id } = req.query;
+    let query = 'SELECT * FROM productos';
+    let params = [];
+    
+    if (catalogo_id) {
+        query += ' WHERE catalogo_id = ?';
+        params.push(catalogo_id);
+    } else if (plantel_id) {
+        query += ' WHERE plantel_id = ?';
+        params.push(plantel_id);
+    }
+    
+    db.query(query, params, (error, results) => {
+        if (error) {
+            console.error('Error al obtener productos:', error);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        res.json(results);
+    });
+});
+
+// Ruta para obtener productos por categoría
+app.get('/productos-categoria', checkAuthenticated, (req, res) => {
+    if (!req.query.categoria) return res.json({});
+
+    const categoria = req.query.categoria;
+    const categoriasValidas = ['Programación', 'Mecatrónica', 'Sistemas Digitales', 'Dibujo técnico', 'Tronco común'];
+    if (!categoriasValidas.includes(categoria)) return res.json({});
+
+    const queryForIdCategoria = 'SELECT categoria_id FROM categorias WHERE nombre = ?';
+    db.query(queryForIdCategoria, [categoria], (error, results) => {
+        if (error || results.length === 0) {
+            console.error('Error obteniendo la categoría:', error);
+            return res.status(500).json({ error: 'Error en el servidor' });
+        }
+        const idCategoria = results[0].categoria_id;
+
+        const queryForProducts = 'SELECT * FROM productos WHERE categoria_id = ?';
+        db.query(queryForProducts, [idCategoria], (error, results) => {
+            if (error) {
+                console.error('Error obteniendo productos:', error);
+                return res.status(500).json({ error: 'Error en el servidor' });
+            }
+            res.json(results);
+        });
+    });
+});
+*/
+
+
+
